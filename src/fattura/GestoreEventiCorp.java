@@ -24,7 +24,9 @@ public class GestoreEventiCorp implements ActionListener{
         if(e.getSource() == gui.aggiungi){
             
         }else{
-            
+            gui.dispose();
+            InterfacciaPiede f = new InterfacciaPiede();
+            f.setVisible(true);
         }
     }
     

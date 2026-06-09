@@ -16,7 +16,6 @@ public class InterfacciaCorpo extends JFrame {
     private JTextField qta;
     private JTextField prezzoPezzo;
     private JTextField importo;
-    private JTextField iva;
     JButton aggiungi;
     JButton avanti;
 
@@ -29,18 +28,16 @@ public class InterfacciaCorpo extends JFrame {
         qta= new JTextField(15);
         prezzoPezzo = new JTextField(15);
         importo = new JTextField(15);
-        iva = new JTextField(15);
         aggiungi = new JButton("AGGIUNGI");
-        avanti = new JButton("SALVA");
+        avanti = new JButton("AVANTI");
 
         GestoreEventiCorp gestore = new GestoreEventiCorp(this);
         aggiungi.addActionListener(gestore);
         avanti.addActionListener(gestore);
                 ;
-        JPanel pannello = new JPanel(new GridLayout(0, 6, 10, 10));
+        JPanel pannello = new JPanel(new GridLayout(0, 5, 10, 10));
 
         pannello.add(new JLabel("Corpo Fattura"));
-        pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
@@ -51,17 +48,14 @@ public class InterfacciaCorpo extends JFrame {
         pannello.add(new JLabel("Quantità"));
         pannello.add(new JLabel("Prezzo al Pezzo"));
         pannello.add(new JLabel("Importo"));
-        pannello.add(new JLabel("IVA"));
         
         pannello.add(articolo);
         pannello.add(descrizione);
         pannello.add(qta);
         pannello.add(prezzoPezzo);
         pannello.add(importo);
-        pannello.add(iva);
         
         pannello.add(aggiungi);
-        pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
         pannello.add(new JLabel(" "));
