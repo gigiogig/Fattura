@@ -11,16 +11,16 @@ import javax.swing.border.*;
 
 public class InterfacciaCorpo extends JFrame {
 
-    private JTextField articolo;
-    private JTextField descrizione;
-    private JTextField qta;
-    private JTextField prezzoPezzo;
-    private JTextField importo;
+    JTextField articolo;
+    JTextField descrizione;
+    JTextField qta;
+    JTextField prezzoPezzo;
+    JTextField importo;
     JButton aggiungi;
     JButton avanti;
 
-    public InterfacciaCorpo() {
-
+    public InterfacciaCorpo(Fattura fatturaOggetto) {
+        
         setTitle("Fattura");
 
         articolo = new JTextField(15);
@@ -31,7 +31,7 @@ public class InterfacciaCorpo extends JFrame {
         aggiungi = new JButton("AGGIUNGI");
         avanti = new JButton("AVANTI");
 
-        GestoreEventiCorp gestore = new GestoreEventiCorp(this);
+        GestoreEventiCorp gestore = new GestoreEventiCorp(this, fatturaOggetto);
         aggiungi.addActionListener(gestore);
         avanti.addActionListener(gestore);
                 ;

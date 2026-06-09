@@ -10,17 +10,17 @@ import javax.swing.border.*;
 
 public class InterfacciaTestata extends JFrame {
 
-    private JTextField nomeForn;
-    private JTextField nomeDest;
-    private JTextField aziendaCed;
-    private JTextField aziendaDest;
-    private JTextField pIvaDest;
-    private JTextField pIvaCed;
-    private JTextField numFattura;
-    private JTextField dataFattura;
-    private JTextField tipoFattura;
-    private JTextField tipoPagamento;
-    private JTextField banca;
+    JTextField nomeForn;
+    JTextField nomeDest;
+    JTextField aziendaCed;
+    JTextField aziendaDest;
+    JTextField pIvaDest;
+    JTextField pIvaCed;
+    JTextField numFattura;
+    JTextField dataFattura;
+    JTextField tipoFattura;
+    JTextField tipoPagamento;
+    JTextField banca;
     JButton avanti;
 
     public InterfacciaTestata() {

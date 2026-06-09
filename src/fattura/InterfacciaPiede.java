@@ -11,13 +11,13 @@ import javax.swing.border.*;
 
 public class InterfacciaPiede extends JFrame {
 
-    private JTextField totImp;
-    private JTextField ivaPerc;
-    private JTextField tot;
-    private JTextField totIva;
+    JTextField totImp;
+    JTextField ivaPerc;
+    JTextField tot;
+    JTextField totIva;
     JButton avanti;
 
-    public InterfacciaPiede() {
+    public InterfacciaPiede(Fattura fatturaOggetto) {
 
         setTitle("Fattura");
 
@@ -27,7 +27,7 @@ public class InterfacciaPiede extends JFrame {
         totIva = new JTextField(15);
         avanti = new JButton("FINE");
 
-        GestoreEventiPiede gestore = new GestoreEventiPiede(this);
+        GestoreEventiPiede gestore = new GestoreEventiPiede(this, fatturaOggetto);
         avanti.addActionListener(gestore);
          
         JPanel pannello = new JPanel(new GridLayout(0, 2, 10, 10));

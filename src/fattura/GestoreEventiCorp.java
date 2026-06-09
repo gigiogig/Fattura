@@ -7,28 +7,34 @@ package fattura;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author debian
- */
-public class GestoreEventiCorp implements ActionListener{
+public class GestoreEventiCorp implements ActionListener {
 
     private final InterfacciaCorpo gui;
+    Fattura fatturaOggetto;
 
-    public GestoreEventiCorp(InterfacciaCorpo gui) {
+    public GestoreEventiCorp(InterfacciaCorpo gui, Fattura fatturaOggetto) {
         this.gui = gui;
+        this.fatturaOggetto = fatturaOggetto;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == gui.aggiungi){
-            
-        }else{
+        if (e.getSource() == gui.aggiungi) {
+            fatturaOggetto.setArticolo(gui.articolo.getText());
+            fatturaOggetto.setDescrizione(gui.descrizione.getText());
+            fatturaOggetto.setQuantita(gui.qta.getText());
+            fatturaOggetto.setPrezzoPezzo(gui.prezzoPezzo.getText());
+            fatturaOggetto.setImporto(gui.importo.getText());
             gui.dispose();
-            InterfacciaPiede f = new InterfacciaPiede();
+            InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
             f.setVisible(true);
+
+        } else {
+            gui.dispose();
+            InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
+            f.setVisible(true);
+
         }
     }
-    
-    
+
 }
