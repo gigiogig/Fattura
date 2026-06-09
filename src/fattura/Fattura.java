@@ -24,7 +24,6 @@ public class Fattura {
     private double tot;
     private double totIva;
 
-    // Aggiungi qui in futuro i getter e setter per i dati del Corpo e del Piede
     // GETTER E SETTER per la Testata
     public String getNomeFornitore() {
         return nomeFornitore;
@@ -114,42 +113,76 @@ public class Fattura {
         this.bancaAppoggio = bancaAppoggio;
     }
 
+    // GETTER E SETTER AGGIUNTI PER IL CORPO E IL PIEDE
+    public String getArticolo() {
+        return articolo;
+    }
+
     public void setArticolo(String articolo) {
         this.articolo = articolo;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
+    public int getQuantita() {
+        return quantita;
+    }
+
     public void setQuantita(String quantita) {
         this.quantita = Integer.parseInt(quantita);
+    }
+
+    public double getImporto() {
+        return importo;
     }
 
     public void setImporto(String importo) {
         this.importo = Double.parseDouble(importo);
     }
 
+    public double getPrezzoPezzo() {
+        return prezzoPezzo;
+    }
+
     public void setPrezzoPezzo(String prezzoPezzo) {
         this.prezzoPezzo = Double.parseDouble(prezzoPezzo);
     }
 
+    public double getTotimp() {
+        return totimp;
+    }
+
     public void setTotimp(String totimp) {
-        this.totimp = Double.parseDouble(totimp) ;
+        this.totimp = Double.parseDouble(totimp);
+    }
+
+    public double getIva() {
+        return iva;
     }
 
     public void setIva(String iva) {
-        this.iva = Double.parseDouble(iva) ;
+        this.iva = Double.parseDouble(iva);
+    }
+
+    public double getTot() {
+        return tot;
     }
 
     public void setTot(String tot) {
         this.tot = Double.parseDouble(tot);
     }
 
+    public double getTotIva() {
+        return totIva;
+    }
+
     public void setTotIva(String totIva) {
         this.totIva = Double.parseDouble(totIva);
     }
-    
-    
-
 }

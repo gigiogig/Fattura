@@ -19,16 +19,21 @@ public class GestoreEventiPiede implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        try {
+            if (e.getSource() == gui.avanti) {
+                fatturaOggetto.setTotimp(gui.totImp.getText());
+                fatturaOggetto.setIva(gui.ivaPerc.getText());
+                fatturaOggetto.setTotIva(gui.totIva.getText());
+                fatturaOggetto.setTot(gui.tot.getText());
 
-        if (e.getSource() == gui.avanti) {
-            fatturaOggetto.setTotimp(gui.totImp.getText());
-            fatturaOggetto.setIva(gui.ivaPerc.getText());
-            fatturaOggetto.setTotIva(gui.totIva.getText());
-            fatturaOggetto.setTot(gui.tot.getText());
+                GeneratorePDF.stampaFattura(fatturaOggetto, "Fattura_Emanata.pdf");
 
-            gui.dispose();
-            JOptionPane.showMessageDialog(null, "Fattura Salvata");
-            System.exit(0);
+                gui.dispose();
+                JOptionPane.showMessageDialog(null, "Fattura Salvata");
+                System.exit(0);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore durante il passaggio dei dati: " + ex.getMessage());
         }
 
     }
