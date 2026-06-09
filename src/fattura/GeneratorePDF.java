@@ -1,90 +1,76 @@
 package fattura;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Cell;
-import com.lowagie.text.Table;
-import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.*;
 import java.awt.Color;
 import java.io.FileOutputStream;
 
 public class GeneratorePDF {
 
     public static void creaPdf(String percorsoFile, Fattura f) {
-        // In OpenPDF l'istanza corretta si crea definendo il formato della pagina
+        // Inizializzazione corretta del documento A4 in OpenPDF
         Document document = new Document(PageSize.A4);
         
         try {
             PdfWriter.getInstance(document, new FileOutputStream(percorsoFile));
             document.open();
             
-            // Definizione dei Font utilizzando la classe di compatibilità Color di AWT
+            // Definizione Font (utilizzando Color di java.awt)
             Font fontTitolo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, Color.DARK_GRAY);
             Font fontSezione = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11, Color.BLACK);
             Font fontTesto = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.BLACK);
             
-            // Intestazione del PDF
-            String tipoFatturaVal = "FATTURA DI VENDITA"; 
-            Paragraph tipoFattura = new Paragraph(tipoFatturaVal, fontTitolo);
-            document.add(tipoFattura);
+            // Intestazione documento
+            document.add(new Paragraph("DOCUMENTO DI FATTURAZIONE", fontTitolo));
+            document.add(new Paragraph("Fattura N: " + f.getNumeroFattura() + "   |   Data: " + f.getDataFattura(), fontTesto));
+            document.add(new Paragraph(" ")); // Spazio vuoto
             
-            Paragraph dettagliFattura = new Paragraph("Fattura N: " + f.getNumeroFattura() + "   |   Data: " + f.getDataFattura(), fontTesto);
-            document.add(dettagliFattura);
-            document.add(new Paragraph(" ")); // Riga vuota di spaziatura
-            
-            // Gestione delle tabelle: OpenPDF utilizza le classi stabili Table e Cell
-            Table tabAnagrafica = new Table(2); // Tabella a 2 colonne
+            // Tabella per i dati anagrafici (Mittente / Destinatario)
+            Table tabAnagrafica = new Table(2);
             tabAnagrafica.setBorderWidth(1);
             tabAnagrafica.setPadding(5);
+            tabAnagrafica.setWidth(100);
             
-            tabAnagrafica.addCell(creaCellaSezione("Mittente:", "Tua Azienda S.r.l.", fontSezione, fontTesto));
-            tabAnagrafica.addCell(creaCellaSezione("Destinatario:", "Dati Cliente", fontSezione, fontTesto));
+            tabAnagrafica.addCell(creaCellaSezione("Azienda Cedente (Mittente):", f.getAziendaCedente() + "\nP.IVA: " + f.getpIvaCedente(), fontSezione, fontTesto));
+            tabAnagrafica.addCell(creaCellaSezione("Azienda Destinataria (Cliente):", f.getAziendaDestinataria() + "\nP.IVA: " + f.getpIvaDestinatario(), fontSezione, fontTesto));
             document.add(tabAnagrafica);
             
-            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" ")); 
             
-            // Tabella per i dati del Piede recuperati dall'interfaccia
+            // Tabella per i dati di riepilogo economici (Piede della fattura)
             Table tabPiede = new Table(2);
             tabPiede.setBorderWidth(1);
             tabPiede.setPadding(5);
+            tabPiede.setWidth(50); // Più stretta, allineata solitamente a destra o centro
             
             tabPiede.addCell(new Phrase("Totale Imponibile:", fontSezione));
             tabPiede.addCell(new Phrase(f.getTotimp() + " €", fontTesto));
             
-            tabPiede.addCell(new Phrase("IVA %:", fontSezione));
+            tabPiede.addCell(new Phrase("Aliquota IVA:", fontSezione));
             tabPiede.addCell(new Phrase(f.getIva() + " %", fontTesto));
             
             tabPiede.addCell(new Phrase("Totale IVA:", fontSezione));
             tabPiede.addCell(new Phrase(f.getTotIva() + " €", fontTesto));
             
-            tabPiede.addCell(new Phrase("Totale Complessivo:", fontSezione));
-            tabPiede.addCell(new Phrase(f.getTot(), fontTesto));
+            tabPiede.addCell(new Phrase("Totale Fattura:", fontSezione));
+            tabPiede.addCell(new Phrase(f.getTot() + " €", fontTesto));
             
             document.add(tabPiede);
             
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            // Assicura la chiusura del flusso del documento
             if (document.isOpen()) {
                 document.close();
             }
         }
     }
 
-    // Metodo helper che sostituisce il vecchio PdfPCell restituendo un oggetto com.lowagie.text.Cell
+    // Helper per generare le celle strutturate usando com.lowagie.text.Cell (no PdfPCell)
     private static Cell creaCellaSezione(String titolo, String testo, Font fTit, Font fTxt) {
         Cell cella = new Cell();
-        Paragraph pTitolo = new Paragraph(titolo, fTit);
-        Paragraph pTesto = new Paragraph(testo, fTxt);
-        
         try {
-            cella.add(pTitolo);
-            cella.add(pTesto);
+            cella.add(new Paragraph(titolo, fTit));
+            cella.add(new Paragraph(testo, fTxt));
         } catch (Exception e) {
             e.printStackTrace();
         }
