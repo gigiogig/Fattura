@@ -130,56 +130,56 @@ public class Fattura {
         this.descrizione = descrizione;
     }
 
-    public int getQuantita() {
-        return quantita;
+    public String getQuantita() {
+        return Integer.toString(quantita);
     }
 
-    public void setQuantita(String quantita) {
-        this.quantita = Integer.parseInt(quantita);
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
     }
 
-    public double getImporto() {
-        return importo;
+    public String getImporto() {
+        return Double.toString(importo);
     }
 
-    public void setImporto(String importo) {
-        this.importo = Double.parseDouble(importo);
+    public void setImporto(Double importo) {
+        this.importo = importo;
     }
 
-    public double getPrezzoPezzo() {
-        return prezzoPezzo;
+    public String getPrezzoPezzo() {
+        return Double.toString(prezzoPezzo);
     }
 
-    public void setPrezzoPezzo(String prezzoPezzo) {
-        this.prezzoPezzo = Double.parseDouble(prezzoPezzo);
+    public void setPrezzoPezzo(Double prezzoPezzo) {
+        this.prezzoPezzo = prezzoPezzo;
     }
 
-    public double getTotimp() {
-        return totimp;
+    public String getTotimp() {
+        return getTot();
     }
 
-    public void setTotimp(String totimp) {
-        this.totimp = Double.parseDouble(totimp);
+    public void setTotimp() {
+        totimp = tot;
     }
 
-    public double getIva() {
-        return iva;
+    public String getIva() {
+        return Double.toString(iva);
     }
 
     public void setIva(String iva) {
         this.iva = Double.parseDouble(iva);
     }
 
-    public double getTot() {
-        return tot;
+    public String getTot() {
+        return Double.toString(tot);
     }
 
     public void setTot(String tot) {
         this.tot = Double.parseDouble(tot);
     }
 
-    public double getTotIva() {
-        return totIva;
+    public String getTotIva() {
+        return Double.toString(totIva);
     }
 
     public void setTotIva(String totIva) {

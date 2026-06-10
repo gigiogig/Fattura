@@ -16,19 +16,26 @@ public class InterfacciaPiede extends JFrame {
     JTextField tot;
     JTextField totIva;
     JButton avanti;
+    JButton calcola;
 
     public InterfacciaPiede(Fattura fatturaOggetto) {
 
         setTitle("Fattura");
 
         totImp = new JTextField(15);
+        totImp.setEditable(false);
+        totImp.setText(fatturaOggetto.getTot());
         ivaPerc = new JTextField(15);
         tot= new JTextField(15);
+        tot.setEditable(false);
         totIva = new JTextField(15);
+        totIva.setEditable(false);
         avanti = new JButton("FINE");
+        calcola = new JButton("CALCOLA");
 
         GestoreEventiPiede gestore = new GestoreEventiPiede(this, fatturaOggetto);
         avanti.addActionListener(gestore);
+        calcola.addActionListener(gestore);
          
         JPanel pannello = new JPanel(new GridLayout(0, 2, 10, 10));
 
@@ -38,7 +45,7 @@ public class InterfacciaPiede extends JFrame {
         pannello.add(new JLabel("Totale Imponibile"));
         pannello.add(totImp);
         
-        pannello.add(new JLabel("IVA %"));
+        pannello.add(new JLabel("Inserisci IVA %"));
         pannello.add(ivaPerc);
         
         pannello.add(new JLabel("Totale IVA"));
@@ -47,9 +54,9 @@ public class InterfacciaPiede extends JFrame {
         pannello.add(new JLabel("Totale Complessivo"));
         pannello.add(tot);
         
-        pannello.add(new JLabel(" "));
         pannello.add(avanti);
-
+        pannello.add(calcola);
+        
         pannello.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(pannello);

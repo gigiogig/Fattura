@@ -18,6 +18,7 @@ public class InterfacciaCorpo extends JFrame {
     JTextField importo;
     JButton aggiungi;
     JButton avanti;
+    JButton calcola;
 
     public InterfacciaCorpo(Fattura fatturaOggetto) {
         
@@ -28,12 +29,15 @@ public class InterfacciaCorpo extends JFrame {
         qta= new JTextField(15);
         prezzoPezzo = new JTextField(15);
         importo = new JTextField(15);
+        importo.setEditable(false);
         aggiungi = new JButton("AGGIUNGI");
         avanti = new JButton("AVANTI");
+        calcola = new JButton("CALCOLA");
 
         GestoreEventiCorp gestore = new GestoreEventiCorp(this, fatturaOggetto);
         aggiungi.addActionListener(gestore);
         avanti.addActionListener(gestore);
+        calcola.addActionListener(gestore);
                 ;
         JPanel pannello = new JPanel(new GridLayout(0, 5, 10, 10));
 
@@ -57,9 +61,10 @@ public class InterfacciaCorpo extends JFrame {
         
         pannello.add(aggiungi);
         pannello.add(new JLabel(" "));
-        pannello.add(new JLabel(" "));
-        pannello.add(new JLabel(" "));
         pannello.add(avanti);
+        pannello.add(new JLabel(" "));
+        pannello.add(calcola);
+        
 
         pannello.setBorder(new EmptyBorder(20, 20, 20, 20));
 

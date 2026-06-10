@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fattura;
 
 import java.awt.event.ActionEvent;
@@ -12,6 +8,10 @@ public class GestoreEventiCorp implements ActionListener {
 
     private final InterfacciaCorpo gui;
     Fattura fatturaOggetto;
+    private String str;
+    private double importo;
+    private int qta;
+    private double pp;
 
     public GestoreEventiCorp(InterfacciaCorpo gui, Fattura fatturaOggetto) {
         this.gui = gui;
@@ -24,12 +24,27 @@ public class GestoreEventiCorp implements ActionListener {
             if (e.getSource() == gui.aggiungi) {
                 fatturaOggetto.setArticolo(gui.articolo.getText());
                 fatturaOggetto.setDescrizione(gui.descrizione.getText());
-                fatturaOggetto.setQuantita(gui.qta.getText());
-                fatturaOggetto.setPrezzoPezzo(gui.prezzoPezzo.getText());
-                fatturaOggetto.setImporto(gui.importo.getText());
+
+                fatturaOggetto.setQuantita(qta);
+
+                fatturaOggetto.setPrezzoPezzo(pp);
+
+                fatturaOggetto.setImporto(importo);
                 gui.dispose();
                 InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
                 f.setVisible(true);
+
+            } else if (e.getSource() == gui.calcola) {
+                str = gui.qta.getText();
+                qta = Integer.parseInt(str);
+                str = "";
+
+                str = gui.prezzoPezzo.getText();
+                pp = Double.parseDouble(str);
+                str = "";
+
+                importo = qta * pp;
+                gui.importo.setText(Double.toString(importo));
 
             } else {
                 gui.dispose();

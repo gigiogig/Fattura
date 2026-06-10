@@ -1,6 +1,7 @@
 package fattura;
 
 import com.lowagie.text.*;
+import com.lowagie.text.pdf.*;
 import java.awt.Color;
 import java.io.FileOutputStream;
 
