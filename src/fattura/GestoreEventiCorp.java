@@ -27,7 +27,6 @@ public class GestoreEventiCorp implements ActionListener {
                 String descArt = gui.descrizione.getText().trim();
                 int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
 
-                // SOSTITUISCE LA VIRGOLA CON IL PUNTO
                 String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
                 double prezzoCorrente = Double.parseDouble(prezzoStr);
 
@@ -46,7 +45,6 @@ public class GestoreEventiCorp implements ActionListener {
                 qta = Integer.parseInt(str);
                 str = "";
 
-                // SOSTITUISCE LA VIRGOLA CON IL PUNTO
                 str = gui.prezzoPezzo.getText().trim().replace(",", ".");
                 pp = Double.parseDouble(str);
                 str = "";
@@ -61,7 +59,6 @@ public class GestoreEventiCorp implements ActionListener {
                     String descArt = gui.descrizione.getText().trim();
                     int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
 
-                    // SOSTITUISCE LA VIRGOLA CON IL PUNTO
                     String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
                     double prezzoCorrente = Double.parseDouble(prezzoStr);
 

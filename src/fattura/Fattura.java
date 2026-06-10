@@ -124,7 +124,7 @@ public class Fattura {
         for (Articolo art : listaArticoli) {
             sommaImponibile += art.getImporto();
         }
-        return Double.toString(sommaImponibile);
+        return String.format(java.util.Locale.US, "%.2f", sommaImponibile);
     }
 
     public String getIva() {
