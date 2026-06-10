@@ -22,14 +22,12 @@ public class GestoreEventiCorp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == gui.aggiungi) {
+                // Dentro l'if di gui.aggiungi:
                 fatturaOggetto.setArticolo(gui.articolo.getText());
                 fatturaOggetto.setDescrizione(gui.descrizione.getText());
-
-                fatturaOggetto.setQuantita(qta);
-
-                fatturaOggetto.setPrezzoPezzo(pp);
-
-                fatturaOggetto.setImporto(importo);
+                fatturaOggetto.setQuantita(Integer.parseInt(gui.qta.getText()));
+                fatturaOggetto.setPrezzoPezzo(Double.parseDouble(gui.prezzoPezzo.getText()));
+                fatturaOggetto.setImporto(Double.parseDouble(gui.importo.getText()));
                 gui.dispose();
                 InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
                 f.setVisible(true);

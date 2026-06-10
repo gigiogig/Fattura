@@ -14,17 +14,22 @@ public class Fattura {
     private String numeroFattura;
     private String tipoPagamento;
     private String bancaAppoggio;
+
+    // Dati provenienti da InterfacciaCorpo
     private String articolo;
     private String descrizione;
     private int quantita;
-    private double importo;
     private double prezzoPezzo;
-    private double totimp;
-    private double iva;
-    private double tot;
-    private double totIva;
+    private double importo; // Questo rappresenta anche l'imponibile per singolo articolo
 
-    // GETTER E SETTER per la Testata
+    // Dati provenienti da InterfacciaPiede
+    private double iva;        // Percentuale (es. 22)
+    private double totIva;     // Valore monetario dell'IVA
+    private double tot;        // Totale fattura (Imponibile + TotIva)
+
+    // ==========================================
+    // GETTER E SETTER TESTATA
+    // ==========================================
     public String getNomeFornitore() {
         return nomeFornitore;
     }
@@ -113,7 +118,9 @@ public class Fattura {
         this.bancaAppoggio = bancaAppoggio;
     }
 
-    // GETTER E SETTER AGGIUNTI PER IL CORPO E IL PIEDE
+    // ==========================================
+    // GETTER E SETTER CORPO E PIEDE (CORRETTI)
+    // ==========================================
     public String getArticolo() {
         return articolo;
     }
@@ -138,51 +145,49 @@ public class Fattura {
         this.quantita = quantita;
     }
 
-    public String getImporto() {
-        return Double.toString(importo);
-    }
-
-    public void setImporto(Double importo) {
-        this.importo = importo;
-    }
-
     public String getPrezzoPezzo() {
         return Double.toString(prezzoPezzo);
     }
 
-    public void setPrezzoPezzo(Double prezzoPezzo) {
+    public void setPrezzoPezzo(double prezzoPezzo) {
         this.prezzoPezzo = prezzoPezzo;
     }
 
+    public String getImporto() {
+        return Double.toString(importo);
+    }
+
+    public void setImporto(double importo) {
+        this.importo = importo;
+    }
+
+    // Il totale imponibile coincide con l'importo calcolato nel corpo
     public String getTotimp() {
-        return getTot();
+        return Double.toString(this.importo);
     }
 
-    public void setTotimp() {
-        totimp = tot;
-    }
-
+    // Rimosso il vecchio setTotimp() errato che creava confusione
     public String getIva() {
         return Double.toString(iva);
     }
 
-    public void setIva(String iva) {
-        this.iva = Double.parseDouble(iva);
-    }
-
-    public String getTot() {
-        return Double.toString(tot);
-    }
-
-    public void setTot(String tot) {
-        this.tot = Double.parseDouble(tot);
+    public void setIva(double iva) {
+        this.iva = iva;
     }
 
     public String getTotIva() {
         return Double.toString(totIva);
     }
 
-    public void setTotIva(String totIva) {
-        this.totIva = Double.parseDouble(totIva);
+    public void setTotIva(double totIva) {
+        this.totIva = totIva;
+    }
+
+    public String getTot() {
+        return Double.toString(tot);
+    }
+
+    public void setTot(double tot) {
+        this.tot = tot;
     }
 }

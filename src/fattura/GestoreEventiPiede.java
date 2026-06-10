@@ -23,10 +23,9 @@ public class GestoreEventiPiede implements ActionListener {
         try {
             if (e.getSource() == gui.avanti) {
 
-                fatturaOggetto.setTotimp();
-                fatturaOggetto.setIva(gui.ivaPerc.getText().trim());
-                fatturaOggetto.setTotIva(gui.totIva.getText().trim());
-                fatturaOggetto.setTot(gui.tot.getText().trim());
+                fatturaOggetto.setIva(Double.parseDouble(gui.ivaPerc.getText().trim()));
+                fatturaOggetto.setTotIva(Double.parseDouble(gui.totIva.getText().trim()));
+                fatturaOggetto.setTot(Double.parseDouble(gui.tot.getText().trim()));
 
                 String nomeFilePdf = "Fattura_Numero_" + fatturaOggetto.getNumeroFattura() + ".pdf";
 
@@ -46,7 +45,7 @@ public class GestoreEventiPiede implements ActionListener {
 
                 totIva = (totImp / 100) * iva;
                 gui.totIva.setText(Double.toString(totIva));
-                
+
                 tot = totImp + totIva;
                 gui.tot.setText(Double.toString(tot));
 

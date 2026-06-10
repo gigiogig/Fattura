@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fattura;
 
 import java.awt.*;
@@ -24,7 +20,7 @@ public class InterfacciaPiede extends JFrame {
 
         totImp = new JTextField(15);
         totImp.setEditable(false);
-        totImp.setText(fatturaOggetto.getTot());
+        totImp.setText(fatturaOggetto.getTotimp() );
         ivaPerc = new JTextField(15);
         tot= new JTextField(15);
         tot.setEditable(false);
