@@ -1,17 +1,13 @@
 package fattura;
 
 import java.awt.event.*;
+import java.util.Locale;
 import javax.swing.*;
 
 public class GestoreEventiPiede implements ActionListener {
 
     private final InterfacciaPiede gui;
-    Fattura fatturaOggetto;
-    private String str;
-    private double iva;
-    private double totIva;
-    private double tot;
-    private double totImp;
+    private final Fattura fatturaOggetto;
 
     public GestoreEventiPiede(InterfacciaPiede gui, Fattura fatturaOggetto) {
         this.gui = gui;
@@ -22,13 +18,16 @@ public class GestoreEventiPiede implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == gui.avanti) {
+                // SOSTITUISCE LA VIRGOLA CON IL PUNTO PRIMA DEL PARSING
+                double ivaPercentuale = Double.parseDouble(gui.ivaPerc.getText().trim().replace(",", "."));
+                double totaleIva = Double.parseDouble(gui.totIva.getText().trim().replace(",", "."));
+                double totaleGenerale = Double.parseDouble(gui.tot.getText().trim().replace(",", "."));
 
-                fatturaOggetto.setIva(Double.parseDouble(gui.ivaPerc.getText().trim()));
-                fatturaOggetto.setTotIva(Double.parseDouble(gui.totIva.getText().trim()));
-                fatturaOggetto.setTot(Double.parseDouble(gui.tot.getText().trim()));
+                fatturaOggetto.setIva(ivaPercentuale);
+                fatturaOggetto.setTotIva(totaleIva);
+                fatturaOggetto.setTot(totaleGenerale);
 
                 String nomeFilePdf = "Fattura_Numero_" + fatturaOggetto.getNumeroFattura() + ".pdf";
-
                 GeneratorePDF.creaPdf(nomeFilePdf, fatturaOggetto);
 
                 gui.dispose();
@@ -36,23 +35,20 @@ public class GestoreEventiPiede implements ActionListener {
                 System.exit(0);
 
             } else {
+                double totImp = Double.parseDouble(fatturaOggetto.getTotimp().replace(",", "."));
+                double ivaPercentuale = Double.parseDouble(gui.ivaPerc.getText().trim().replace(",", "."));
 
-                totImp = Double.parseDouble(fatturaOggetto.getTotimp());
+                double calcoloIva = (totImp / 100) * ivaPercentuale;
+                String ivaFormattata = String.format(Locale.US, "%.2f", calcoloIva);
+                gui.totIva.setText(ivaFormattata);
 
-                str = gui.ivaPerc.getText();
-                iva = Double.parseDouble(str);
-                str = "";
-
-                totIva = (totImp / 100) * iva;
-                gui.totIva.setText(Double.toString(totIva));
-
-                tot = totImp + totIva;
-                gui.tot.setText(Double.toString(tot));
-
+                double calcoloTotale = totImp + Double.parseDouble(ivaFormattata);
+                String totaleFormattato = String.format(Locale.US, "%.2f", calcoloTotale);
+                gui.tot.setText(totaleFormattato);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(gui,
-                    "Errore: Assicurati di inserire solo numeri nei campi dell'IVA e dei Totali (usa il punto per i decimali, es: 150.50)",
+                    "Errore: Assicurati di inserire correttamente i valori numerici.",
                     "Errore di Formato",
                     JOptionPane.ERROR_MESSAGE);
         }

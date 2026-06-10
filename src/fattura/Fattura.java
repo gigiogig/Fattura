@@ -1,8 +1,10 @@
 package fattura;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fattura {
 
-    // Dati provenienti da InterfacciaTestata
     private String nomeFornitore;
     private String aziendaCedente;
     private String pIvaCedente;
@@ -15,21 +17,12 @@ public class Fattura {
     private String tipoPagamento;
     private String bancaAppoggio;
 
-    // Dati provenienti da InterfacciaCorpo
-    private String articolo;
-    private String descrizione;
-    private int quantita;
-    private double prezzoPezzo;
-    private double importo; // Questo rappresenta anche l'imponibile per singolo articolo
+    private List<Articolo> listaArticoli = new ArrayList<>();
 
-    // Dati provenienti da InterfacciaPiede
-    private double iva;        // Percentuale (es. 22)
-    private double totIva;     // Valore monetario dell'IVA
-    private double tot;        // Totale fattura (Imponibile + TotIva)
+    private double iva;
+    private double totIva;
+    private double tot;
 
-    // ==========================================
-    // GETTER E SETTER TESTATA
-    // ==========================================
     public String getNomeFornitore() {
         return nomeFornitore;
     }
@@ -118,55 +111,22 @@ public class Fattura {
         this.bancaAppoggio = bancaAppoggio;
     }
 
-    // ==========================================
-    // GETTER E SETTER CORPO E PIEDE (CORRETTI)
-    // ==========================================
-    public String getArticolo() {
-        return articolo;
+    public void aggiungiArticolo(Articolo art) {
+        this.listaArticoli.add(art);
     }
 
-    public void setArticolo(String articolo) {
-        this.articolo = articolo;
+    public List<Articolo> getListaArticoli() {
+        return listaArticoli;
     }
 
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    public String getQuantita() {
-        return Integer.toString(quantita);
-    }
-
-    public void setQuantita(int quantita) {
-        this.quantita = quantita;
-    }
-
-    public String getPrezzoPezzo() {
-        return Double.toString(prezzoPezzo);
-    }
-
-    public void setPrezzoPezzo(double prezzoPezzo) {
-        this.prezzoPezzo = prezzoPezzo;
-    }
-
-    public String getImporto() {
-        return Double.toString(importo);
-    }
-
-    public void setImporto(double importo) {
-        this.importo = importo;
-    }
-
-    // Il totale imponibile coincide con l'importo calcolato nel corpo
     public String getTotimp() {
-        return Double.toString(this.importo);
+        double sommaImponibile = 0;
+        for (Articolo art : listaArticoli) {
+            sommaImponibile += art.getImporto();
+        }
+        return Double.toString(sommaImponibile);
     }
 
-    // Rimosso il vecchio setTotimp() errato che creava confusione
     public String getIva() {
         return Double.toString(iva);
     }

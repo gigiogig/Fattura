@@ -2,6 +2,7 @@ package fattura;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 public class GestoreEventiCorp implements ActionListener {
@@ -22,56 +23,58 @@ public class GestoreEventiCorp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == gui.aggiungi) {
-
+                String nomeArt = gui.articolo.getText().trim();
+                String descArt = gui.descrizione.getText().trim();
                 int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
-                double prezzoCorrente = Double.parseDouble(gui.prezzoPezzo.getText().trim());
 
-                fatturaOggetto.setArticolo(gui.articolo.getText().trim());
-                fatturaOggetto.setDescrizione(gui.descrizione.getText().trim());
+                // SOSTITUISCE LA VIRGOLA CON IL PUNTO
+                String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
+                double prezzoCorrente = Double.parseDouble(prezzoStr);
 
-                fatturaOggetto.setQuantita(quantitaCorrente);
-                fatturaOggetto.setPrezzoPezzo(prezzoCorrente);
-                fatturaOggetto.setImporto(quantitaCorrente * prezzoCorrente);
+                double importoGrezzo = quantitaCorrente * prezzoCorrente;
+                String importoFormattato = String.format(Locale.US, "%.2f", importoGrezzo);
+
+                Articolo nuovoArticolo = new Articolo(nomeArt, descArt, quantitaCorrente, prezzoCorrente);
+                fatturaOggetto.aggiungiArticolo(nuovoArticolo);
+
                 gui.dispose();
                 InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
                 f.setVisible(true);
 
             } else if (e.getSource() == gui.calcola) {
-                str = gui.qta.getText();
+                str = gui.qta.getText().trim();
                 qta = Integer.parseInt(str);
                 str = "";
 
-                str = gui.prezzoPezzo.getText();
+                // SOSTITUISCE LA VIRGOLA CON IL PUNTO
+                str = gui.prezzoPezzo.getText().trim().replace(",", ".");
                 pp = Double.parseDouble(str);
                 str = "";
 
                 importo = qta * pp;
-                gui.importo.setText(Double.toString(importo));
+                String importoFormattato = String.format(Locale.US, "%.2f", importo);
+                gui.importo.setText(importoFormattato);
 
             } else {
-                
                 if (!gui.qta.getText().trim().isEmpty() && !gui.prezzoPezzo.getText().trim().isEmpty()) {
-
+                    String nomeArt = gui.articolo.getText().trim();
+                    String descArt = gui.descrizione.getText().trim();
                     int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
-                    double prezzoCorrente = Double.parseDouble(gui.prezzoPezzo.getText().trim());
 
-                    double importoCorrente = quantitaCorrente * prezzoCorrente;
+                    // SOSTITUISCE LA VIRGOLA CON IL PUNTO
+                    String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
+                    double prezzoCorrente = Double.parseDouble(prezzoStr);
 
-                    fatturaOggetto.setArticolo(gui.articolo.getText().trim());
-                    fatturaOggetto.setDescrizione(gui.descrizione.getText().trim());
-                    fatturaOggetto.setQuantita(quantitaCorrente);
-                    fatturaOggetto.setPrezzoPezzo(prezzoCorrente);
-                    fatturaOggetto.setImporto(importoCorrente);
+                    Articolo ultimoArticolo = new Articolo(nomeArt, descArt, quantitaCorrente, prezzoCorrente);
+                    fatturaOggetto.aggiungiArticolo(ultimoArticolo);
                 }
-                
+
                 gui.dispose();
                 InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
                 f.setVisible(true);
-
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore durante il passaggio dei dati: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Errore durante l'inserimento dell'articolo: " + ex.getMessage());
         }
     }
-
 }
