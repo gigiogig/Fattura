@@ -22,12 +22,16 @@ public class GestoreEventiCorp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == gui.aggiungi) {
-                // Dentro l'if di gui.aggiungi:
-                fatturaOggetto.setArticolo(gui.articolo.getText());
-                fatturaOggetto.setDescrizione(gui.descrizione.getText());
-                fatturaOggetto.setQuantita(Integer.parseInt(gui.qta.getText()));
-                fatturaOggetto.setPrezzoPezzo(Double.parseDouble(gui.prezzoPezzo.getText()));
-                fatturaOggetto.setImporto(Double.parseDouble(gui.importo.getText()));
+
+                int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
+                double prezzoCorrente = Double.parseDouble(gui.prezzoPezzo.getText().trim());
+
+                fatturaOggetto.setArticolo(gui.articolo.getText().trim());
+                fatturaOggetto.setDescrizione(gui.descrizione.getText().trim());
+
+                fatturaOggetto.setQuantita(quantitaCorrente);
+                fatturaOggetto.setPrezzoPezzo(prezzoCorrente);
+                fatturaOggetto.setImporto(quantitaCorrente * prezzoCorrente);
                 gui.dispose();
                 InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
                 f.setVisible(true);
@@ -45,6 +49,21 @@ public class GestoreEventiCorp implements ActionListener {
                 gui.importo.setText(Double.toString(importo));
 
             } else {
+                
+                if (!gui.qta.getText().trim().isEmpty() && !gui.prezzoPezzo.getText().trim().isEmpty()) {
+
+                    int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
+                    double prezzoCorrente = Double.parseDouble(gui.prezzoPezzo.getText().trim());
+
+                    double importoCorrente = quantitaCorrente * prezzoCorrente;
+
+                    fatturaOggetto.setArticolo(gui.articolo.getText().trim());
+                    fatturaOggetto.setDescrizione(gui.descrizione.getText().trim());
+                    fatturaOggetto.setQuantita(quantitaCorrente);
+                    fatturaOggetto.setPrezzoPezzo(prezzoCorrente);
+                    fatturaOggetto.setImporto(importoCorrente);
+                }
+                
                 gui.dispose();
                 InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
                 f.setVisible(true);

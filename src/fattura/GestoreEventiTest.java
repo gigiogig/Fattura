@@ -21,20 +21,20 @@ public class GestoreEventiTest implements ActionListener {
             if (e.getSource() == gui.avanti) {
                 // 1. Istanziamo il modello e inseriamo i dati estratti dalla GUI della Testata
                 Fattura fatturaOggetto = new Fattura();
-                fatturaOggetto.setNomeFornitore(gui.nomeForn.getText());
-                fatturaOggetto.setAziendaCedente(gui.aziendaCed.getText());
-                fatturaOggetto.setpIvaCedente(gui.pIvaCed.getText());
+                fatturaOggetto.setNomeFornitore(gui.nomeForn.getText().trim());
+                fatturaOggetto.setAziendaCedente(gui.aziendaCed.getText().trim());
+                fatturaOggetto.setpIvaCedente(gui.pIvaCed.getText().trim());
 
-                fatturaOggetto.setNomeDestinatario(gui.nomeDest.getText());
-                fatturaOggetto.setAziendaDestinataria(gui.aziendaDest.getText());
-                fatturaOggetto.setpIvaDestinatario(gui.pIvaDest.getText());
+                fatturaOggetto.setNomeDestinatario(gui.nomeDest.getText().trim());
+                fatturaOggetto.setAziendaDestinataria(gui.aziendaDest.getText().trim());
+                fatturaOggetto.setpIvaDestinatario(gui.pIvaDest.getText().trim());
 
-                fatturaOggetto.setTipoFattura(gui.tipoFattura.getText());
-                fatturaOggetto.setDataFattura(gui.dataFattura.getText());
-                fatturaOggetto.setNumeroFattura(gui.numFattura.getText());
+                fatturaOggetto.setTipoFattura(gui.tipoFattura.getText().trim());
+                fatturaOggetto.setDataFattura(gui.dataFattura.getText().trim());
+                fatturaOggetto.setNumeroFattura(gui.numFattura.getText().trim());
 
-                fatturaOggetto.setTipoPagamento(gui.tipoPagamento.getText());
-                fatturaOggetto.setBancaAppoggio(gui.banca.getText());
+                fatturaOggetto.setTipoPagamento(gui.tipoPagamento.getText().trim());
+                fatturaOggetto.setBancaAppoggio(gui.banca.getText().trim());
 
                 // 2. Chiudiamo la finestra attuale
                 gui.dispose();
