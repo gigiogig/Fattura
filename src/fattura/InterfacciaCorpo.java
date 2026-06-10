@@ -5,7 +5,6 @@
 package fattura;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -38,7 +37,7 @@ public class InterfacciaCorpo extends JFrame {
         aggiungi.addActionListener(gestore);
         avanti.addActionListener(gestore);
         calcola.addActionListener(gestore);
-                ;
+                
         JPanel pannello = new JPanel(new GridLayout(0, 5, 10, 10));
 
         pannello.add(new JLabel("Corpo Fattura"));

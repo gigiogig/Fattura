@@ -2,11 +2,11 @@ package fattura;
 
 public class Articolo {
 
-    private String nome;
-    private String descrizione;
-    private int quantita;
-    private double prezzoPezzo;
-    private double importo;
+    private final String nome;
+    private final String descrizione;
+    private final int quantita;
+    private final double prezzoPezzo;
+    private final double importo;
 
     public Articolo(String nome, String descrizione, int quantita, double prezzoPezzo) {
         this.nome = nome;

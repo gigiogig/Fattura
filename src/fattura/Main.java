@@ -1,6 +1,7 @@
 package fattura;
 
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
 
@@ -13,7 +14,7 @@ public class Main {
     private static void impostaStile() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             System.out.println("Impossibile impostare lo stile di sistema");
         }
     }

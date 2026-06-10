@@ -16,8 +16,7 @@ import java.io.IOException;
 public class GeneratorePDF {
 
     public static void creaPdf(String nomeFile, Fattura fattura) {
-        Document document = new Document();
-        try {
+        try (Document document = new Document()) {
             PdfWriter.getInstance(document, new FileOutputStream(nomeFile));
             document.open();
 
@@ -120,8 +119,6 @@ public class GeneratorePDF {
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
-        } finally {
-            document.close();
         }
     }
 }

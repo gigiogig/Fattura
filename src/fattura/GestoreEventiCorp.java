@@ -31,7 +31,6 @@ public class GestoreEventiCorp implements ActionListener {
                 double prezzoCorrente = Double.parseDouble(prezzoStr);
 
                 double importoGrezzo = quantitaCorrente * prezzoCorrente;
-                String importoFormattato = String.format(Locale.US, "%.2f", importoGrezzo);
 
                 Articolo nuovoArticolo = new Articolo(nomeArt, descArt, quantitaCorrente, prezzoCorrente);
                 fatturaOggetto.aggiungiArticolo(nuovoArticolo);
@@ -70,7 +69,7 @@ public class GestoreEventiCorp implements ActionListener {
                 InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
                 f.setVisible(true);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Errore durante l'inserimento dell'articolo: " + ex.getMessage());
         }
     }

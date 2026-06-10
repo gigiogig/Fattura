@@ -17,7 +17,7 @@ public class Fattura {
     private String tipoPagamento;
     private String bancaAppoggio;
 
-    private List<Articolo> listaArticoli = new ArrayList<>();
+    private final List<Articolo> listaArticoli = new ArrayList<>();
 
     private double iva;
     private double totIva;

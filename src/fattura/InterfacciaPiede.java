@@ -1,7 +1,6 @@
 package fattura;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 
