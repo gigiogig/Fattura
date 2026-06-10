@@ -245,6 +245,7 @@ public class InterfacciaCorpo extends JFrame {
             f.setText(placeholder);
             f.setForeground(FG_DIM);
             f.addFocusListener(new java.awt.event.FocusAdapter() {
+                @Override
                 public void focusGained(java.awt.event.FocusEvent e) {
                     if (f.getText().equals(placeholder)) {
                         f.setText("");
@@ -252,6 +253,7 @@ public class InterfacciaCorpo extends JFrame {
                     }
                 }
 
+                @Override
                 public void focusLost(java.awt.event.FocusEvent e) {
                     if (f.getText().isEmpty()) {
                         f.setText(placeholder);

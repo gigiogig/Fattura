@@ -119,6 +119,10 @@ public class GeneratorePDF {
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Impossibile scrivere il file PDF. Verificare che non sia aperto in un altro programma.\nErrore: " + de.getMessage(),
+                    "Errore di Scrittura",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -1,18 +1,12 @@
 package fattura;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Locale;
-import javax.swing.JOptionPane;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class GestoreEventiCorp implements ActionListener {
 
     private final InterfacciaCorpo gui;
-    Fattura fatturaOggetto;
-    private String str;
-    private double importo;
-    private int qta;
-    private double pp;
+    private final Fattura fatturaOggetto;
 
     public GestoreEventiCorp(InterfacciaCorpo gui, Fattura fatturaOggetto) {
         this.gui = gui;
@@ -21,56 +15,39 @@ public class GestoreEventiCorp implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            if (e.getSource() == gui.aggiungi) {
-                String nomeArt = gui.articolo.getText().trim();
-                String descArt = gui.descrizione.getText().trim();
-                int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
+        if (e.getSource() == gui.aggiungi) { // Nome originale del pulsante: gui.aggiungi
+            try {
+                // Recupero dei dati usando i nomi esatti dei componenti della tua GUI
+                String nome = gui.articolo.getText();
+                String desc = gui.descrizione.getText();
+                int qta = Integer.parseInt(gui.qta.getText().trim());
+                double prezzo = Double.parseDouble(gui.prezzoPezzo.getText().trim().replace(",", "."));
 
-                String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
-                double prezzoCorrente = Double.parseDouble(prezzoStr);
+                // Creazione dell'articolo e aggiunta alla lista della fattura
+                Articolo articolo = new Articolo(nome, desc, qta, prezzo);
+                fatturaOggetto.aggiungiArticolo(articolo);
 
-                double importoGrezzo = quantitaCorrente * prezzoCorrente;
+                // Resetta i campi di testo per permettere un nuovo inserimento
+                gui.articolo.setText("");
+                gui.descrizione.setText("");
+                gui.qta.setText("");
+                gui.prezzoPezzo.setText("");
 
-                Articolo nuovoArticolo = new Articolo(nomeArt, descArt, quantitaCorrente, prezzoCorrente);
-                fatturaOggetto.aggiungiArticolo(nuovoArticolo);
+                JOptionPane.showMessageDialog(gui, "Articolo aggiunto con successo alla fattura!");
 
-                gui.dispose();
-                InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
-                f.setVisible(true);
-
-            } else if (e.getSource() == gui.calcola) {
-                str = gui.qta.getText().trim();
-                qta = Integer.parseInt(str);
-                str = "";
-
-                str = gui.prezzoPezzo.getText().trim().replace(",", ".");
-                pp = Double.parseDouble(str);
-                str = "";
-
-                importo = qta * pp;
-                String importoFormattato = String.format(Locale.US, "%.2f", importo);
-                gui.importo.setText(importoFormattato);
-
-            } else {
-                if (!gui.qta.getText().trim().isEmpty() && !gui.prezzoPezzo.getText().trim().isEmpty()) {
-                    String nomeArt = gui.articolo.getText().trim();
-                    String descArt = gui.descrizione.getText().trim();
-                    int quantitaCorrente = Integer.parseInt(gui.qta.getText().trim());
-
-                    String prezzoStr = gui.prezzoPezzo.getText().trim().replace(",", ".");
-                    double prezzoCorrente = Double.parseDouble(prezzoStr);
-
-                    Articolo ultimoArticolo = new Articolo(nomeArt, descArt, quantitaCorrente, prezzoCorrente);
-                    fatturaOggetto.aggiungiArticolo(ultimoArticolo);
-                }
-
-                gui.dispose();
-                InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
-                f.setVisible(true);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(gui,
+                        "Errore nei dati dell'articolo: controlla che Quantità e Prezzo siano numerici.",
+                        "Errore di Inserimento",
+                        JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Errore durante l'inserimento dell'articolo: " + ex.getMessage());
+
+        } else if (e.getSource() == gui.avanti) { // Nome originale del pulsante: gui.avanti
+            // Quando si va avanti alla schermata successiva, NON creiamo né aggiungiamo articoli.
+            // Ci limitiamo a chiudere la finestra attuale e ad aprire quella del Piede della fattura.
+            gui.dispose();
+            InterfacciaPiede f = new InterfacciaPiede(fatturaOggetto);
+            f.setVisible(true);
         }
     }
 }

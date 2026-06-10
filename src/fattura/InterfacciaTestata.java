@@ -22,10 +22,9 @@ public class InterfacciaTestata extends JFrame {
     // ── Palette ──────────────────────────────────────────────
     private static final Color BG = new Color(0x1A1A2E);
     private static final Color CARD = new Color(0x16213E);
-    private static final Color HEADER = new Color(0x0F3460);
     private static final Color ACCENT = new Color(0xE94560);
     private static final Color TEAL = new Color(0xA8DADC);
-    private static final Color FG = new Color(0xEAEAEA);
+    private static final Color FG = new Color(0x000000);
     private static final Color FG_DIM = new Color(0x8899AA);
     private static final Color FIELD_BG = new Color(0x0D1B2A);
     private static final Color BORDER_C = new Color(0x2A3F5F);
@@ -199,32 +198,32 @@ public class InterfacciaTestata extends JFrame {
     }
 
     private JTextField getFieldByName(String name) {
-        switch (name) {
-            case "nomeForn":
-                return nomeForn;
-            case "aziendaCed":
-                return aziendaCed;
-            case "pIvaCed":
-                return pIvaCed;
-            case "nomeDest":
-                return nomeDest;
-            case "aziendaDest":
-                return aziendaDest;
-            case "pIvaDest":
-                return pIvaDest;
-            case "tipoFattura":
-                return tipoFattura;
-            case "dataFattura":
-                return dataFattura;
-            case "numFattura":
-                return numFattura;
-            case "tipoPagamento":
-                return tipoPagamento;
-            case "banca":
-                return banca;
-            default:
-                return new JTextField();
-        }
+        return switch (name) {
+            case "nomeForn" ->
+                nomeForn;
+            case "aziendaCed" ->
+                aziendaCed;
+            case "pIvaCed" ->
+                pIvaCed;
+            case "nomeDest" ->
+                nomeDest;
+            case "aziendaDest" ->
+                aziendaDest;
+            case "pIvaDest" ->
+                pIvaDest;
+            case "tipoFattura" ->
+                tipoFattura;
+            case "dataFattura" ->
+                dataFattura;
+            case "numFattura" ->
+                numFattura;
+            case "tipoPagamento" ->
+                tipoPagamento;
+            case "banca" ->
+                banca;
+            default ->
+                new JTextField();
+        };
     }
 
     private JPanel buildFooter() {
@@ -250,6 +249,7 @@ public class InterfacciaTestata extends JFrame {
         f.setText(placeholder);
         f.setForeground(FG_DIM);
         f.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (f.getText().equals(placeholder)) {
                     f.setText("");
@@ -257,6 +257,7 @@ public class InterfacciaTestata extends JFrame {
                 }
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (f.getText().isEmpty()) {
                     f.setText(placeholder);
