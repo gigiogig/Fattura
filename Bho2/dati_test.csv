@@ -1,0 +1,6 @@
+AdminUser;AdminPass;UsernameSito;PasswordSito;Nome;Cognome;Email;Telefono;DataNascita;Via;Civico;Provincia;Comune;SitoWeb
+admin_mario;PassMaster123!;mario.rossi;Segreta123!;Mario;Rossi;mario@mail.it;333000111;01/01/1990;Roma;10;MN;Mantova;google.com
+admin_mario;PassMaster123!;mario_fb;F@cebook_99;Mario;Rossi;mario@mail.it;333000111;01/01/1990;Roma;10;MN;Mantova;facebook.com
+admin_luca;Sicurezza99;luca.dev;!@#$%^&*();Luca;Bianchi;luca@code.it;333999888;15/05/1995;Milano;5;MI;Milano;github.com
+admin_luca;Sicurezza99;luca_test;PswCort;Luca;Bianchi;luca@code.it;333999888;15/05/1995;Milano;5;MI;Milano;test.it
+admin_elena;P@ssword_X;elena_work;MoltoLungaQuestaPasswordPerTestare1234567890;Elena;Verdi;;;20/10/1988;Venezia;1;VE;Venezia;amazon.it

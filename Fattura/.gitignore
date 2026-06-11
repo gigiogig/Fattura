@@ -1,0 +1,18 @@
+# File compilati
+*.class
+
+# Log
+*.log
+
+# Cartelle di build
+target/
+bin/
+build/
+
+# Configurazioni degli IDE (IntelliJ, Eclipse, NetBeans)
+.idea/
+*.iml
+.metadata/
+.classpath
+.project
+.settings/
