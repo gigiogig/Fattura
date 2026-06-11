@@ -16,17 +16,21 @@ public class InterfacciaCorpo extends JFrame {
     JButton aggiungi;
     JButton avanti;
     JButton calcola;
+    JTable tabellaArticoli;
+    JLabel labelContatore;
 
-    // ── Palette ──────────────────────────────────────────────
     private static final Color BG = new Color(0x1A1A2E);
-    private static final Color CARD = new Color(0x16213E);
+    private static final Color CARD = new Color(0x243654);
     private static final Color ACCENT = new Color(0xE94560);
-    private static final Color TEAL = new Color(0xA8DADC);
-    private static final Color FG = new Color(0xEAEAEA);
+    private static final Color TEAL = new Color(0x5CE1E6);
+    private static final Color FG = new Color(0xF0F4FF);
     private static final Color FG_DIM = new Color(0x8899AA);
-    private static final Color FIELD_BG = new Color(0x0D1B2A);
-    private static final Color BORDER_C = new Color(0x2A3F5F);
-    private static final Color ROW_ALT = new Color(0x0F2030);
+    private static final Color FIELD_BG = new Color(0xF5F7FF);
+    private static final Color FIELD_FG = new Color(0x1A1A2E);
+    private static final Color BORDER_C = new Color(0x3A5278);
+    private static final Color ROW_EVEN = new Color(0xF5F7FF);
+    private static final Color ROW_ODD = new Color(0xE8EDF8);
+    private static final Color HDR_TBL = new Color(0x0F3460);
 
     public InterfacciaCorpo(Fattura fatturaOggetto) {
         setTitle("Generatore Fattura");
@@ -40,18 +44,19 @@ public class InterfacciaCorpo extends JFrame {
         prezzoPezzo = makeField("0.00");
         importo = makeField("");
         importo.setEditable(false);
-        importo.setForeground(TEAL);
+        importo.setFont(new Font("SansSerif", Font.BOLD, 13));
+        importo.setForeground(new Color(0x0F3460));
 
         aggiungi = makeButton("+ AGGIUNGI", ACCENT);
-        calcola = makeButton("= CALCOLA", new Color(0x0F3460));
-        avanti = makeButton("AVANTI  →", ACCENT);
+        calcola = makeButton("= CALCOLA", HDR_TBL);
+        avanti = makeButton("AVANTI  \u2192", ACCENT);
 
         GestoreEventiCorp gestore = new GestoreEventiCorp(this, fatturaOggetto);
         aggiungi.addActionListener(gestore);
         avanti.addActionListener(gestore);
         calcola.addActionListener(gestore);
 
-        JPanel root = new JPanel(new BorderLayout(0, 16));
+        JPanel root = new JPanel(new BorderLayout(16, 16));
         root.setBackground(BG);
         root.setBorder(new EmptyBorder(24, 28, 24, 28));
 
@@ -65,7 +70,6 @@ public class InterfacciaCorpo extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    // ── Step indicator (step 2 active) ────────────────────────
     private JPanel buildStepBar(int active) {
         JPanel bar = new JPanel(new GridBagLayout());
         bar.setBackground(BG);
@@ -74,7 +78,7 @@ public class InterfacciaCorpo extends JFrame {
         GridBagConstraints gc = new GridBagConstraints();
         for (int i = 0; i < labels.length; i++) {
             final int idx = i + 1;
-            JLabel circle = new JLabel(String.valueOf(idx), SwingConstants.CENTER) {
+            JLabel circle = new JLabel(idx < active ? "\u2713" : String.valueOf(idx), SwingConstants.CENTER) {
                 @Override
                 protected void paintComponent(Graphics g) {
                     Graphics2D g2 = (Graphics2D) g.create();
@@ -87,10 +91,10 @@ public class InterfacciaCorpo extends JFrame {
             };
             circle.setPreferredSize(new Dimension(32, 32));
             circle.setFont(new Font("SansSerif", Font.BOLD, 13));
-            circle.setForeground(idx <= active ? Color.WHITE : FG_DIM);
+            circle.setForeground(Color.WHITE);
             JLabel lbl = new JLabel(labels[i], SwingConstants.CENTER);
             lbl.setFont(new Font("SansSerif", idx == active ? Font.BOLD : Font.PLAIN, 11));
-            lbl.setForeground(idx == active ? TEAL : (idx < active ? FG_DIM : FG_DIM));
+            lbl.setForeground(idx == active ? TEAL : FG_DIM);
             JPanel cell = new JPanel(new BorderLayout(0, 4));
             cell.setBackground(BG);
             cell.add(circle, BorderLayout.CENTER);
@@ -102,7 +106,7 @@ public class InterfacciaCorpo extends JFrame {
             bar.add(cell, gc);
             if (i < labels.length - 1) {
                 JPanel line = new JPanel();
-                line.setBackground(i + 1 < active ? ACCENT : BORDER_C);
+                line.setBackground(idx < active ? ACCENT : BORDER_C);
                 line.setPreferredSize(new Dimension(80, 2));
                 gc.gridx = i * 2 + 1;
                 gc.fill = GridBagConstraints.HORIZONTAL;
@@ -117,7 +121,6 @@ public class InterfacciaCorpo extends JFrame {
         return bar;
     }
 
-    // ── Input card ────────────────────────────────────────────
     private JPanel buildInputCard() {
         JPanel card = new JPanel(new BorderLayout(0, 10));
         card.setBackground(CARD);
@@ -125,32 +128,26 @@ public class InterfacciaCorpo extends JFrame {
                 BorderFactory.createLineBorder(BORDER_C, 1),
                 new EmptyBorder(14, 16, 14, 16)
         ));
-
         JLabel hdr = new JLabel("NUOVO ARTICOLO");
         hdr.setFont(new Font("SansSerif", Font.BOLD, 10));
         hdr.setForeground(TEAL);
-
         JPanel grid = new JPanel(new GridLayout(0, 2, 16, 8));
         grid.setBackground(CARD);
-
         addRow(grid, "Articolo", articolo);
         addRow(grid, "Descrizione", descrizione);
-        addRow(grid, "Quantità", qta);
+        addRow(grid, "Quantit\u00e0", qta);
         addRow(grid, "Prezzo al Pezzo", prezzoPezzo);
         addRow(grid, "Importo", importo);
-
         JPanel btnRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         btnRow.setBackground(CARD);
         btnRow.add(calcola);
         btnRow.add(aggiungi);
-
         card.add(hdr, BorderLayout.NORTH);
         card.add(grid, BorderLayout.CENTER);
         card.add(btnRow, BorderLayout.SOUTH);
         return card;
     }
 
-    // ── Articles table ────────────────────────────────────────
     private JPanel buildTableCard(List<Articolo> articoli) {
         JPanel card = new JPanel(new BorderLayout(0, 10));
         card.setBackground(CARD);
@@ -159,12 +156,11 @@ public class InterfacciaCorpo extends JFrame {
                 new EmptyBorder(14, 16, 14, 16)
         ));
         card.setPreferredSize(new Dimension(460, 0));
-
-        JLabel hdr = new JLabel("ARTICOLI AGGIUNTI  (" + articoli.size() + ")");
-        hdr.setFont(new Font("SansSerif", Font.BOLD, 10));
-        hdr.setForeground(TEAL);
-
-        String[] cols = {"Articolo", "Descrizione", "Q.tà", "Prezzo", "Importo"};
+        labelContatore = new JLabel("ARTICOLI AGGIUNTI  (" + articoli.size() + ")");
+        labelContatore.setFont(new Font("SansSerif", Font.BOLD, 10));
+        labelContatore.setForeground(TEAL);
+        JLabel hdr = labelContatore;
+        String[] cols = {"Articolo", "Descrizione", "Q.t\u00e0", "Prezzo", "Importo"};
         DefaultTableModel model = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int r, int c) {
@@ -174,41 +170,37 @@ public class InterfacciaCorpo extends JFrame {
         for (Articolo a : articoli) {
             model.addRow(new Object[]{
                 a.getNome(), a.getDescrizione(), a.getQuantita(),
-                String.format("%.2f €", a.getPrezzoPezzo()),
-                String.format("%.2f €", a.getImporto())
+                String.format("%.2f \u20ac", a.getPrezzoPezzo()),
+                String.format("%.2f \u20ac", a.getImporto())
             });
         }
-
-        JTable table = new JTable(model);
-        table.setBackground(FIELD_BG);
-        table.setForeground(FG);
+        tabellaArticoli = new JTable(model);
+        JTable table = tabellaArticoli;
+        table.setBackground(ROW_EVEN);
+        table.setForeground(FIELD_FG);
         table.setFont(new Font("SansSerif", Font.PLAIN, 12));
         table.setRowHeight(26);
-        table.setGridColor(BORDER_C);
+        table.setGridColor(new Color(0xCDD5E0));
         table.setShowGrid(true);
-        table.getTableHeader().setBackground(new Color(0x0F3460));
-        table.getTableHeader().setForeground(TEAL);
+        table.getTableHeader().setBackground(HDR_TBL);
+        table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 11));
-        table.setSelectionBackground(ACCENT.darker());
+        table.setSelectionBackground(ACCENT);
         table.setSelectionForeground(Color.WHITE);
-
-        // alternating rows
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(
                     JTable t, Object v, boolean sel, boolean foc, int row, int col) {
                 super.getTableCellRendererComponent(t, v, sel, foc, row, col);
-                setBackground(sel ? ACCENT.darker() : (row % 2 == 0 ? FIELD_BG : ROW_ALT));
-                setForeground(sel ? Color.WHITE : FG);
+                setBackground(sel ? ACCENT : (row % 2 == 0 ? ROW_EVEN : ROW_ODD));
+                setForeground(sel ? Color.WHITE : FIELD_FG);
                 setBorder(new EmptyBorder(0, 6, 0, 6));
                 return this;
             }
         });
-
         JScrollPane scroll = new JScrollPane(table);
-        scroll.getViewport().setBackground(FIELD_BG);
+        scroll.getViewport().setBackground(ROW_EVEN);
         scroll.setBorder(BorderFactory.createLineBorder(BORDER_C, 1));
-
         card.add(hdr, BorderLayout.NORTH);
         card.add(scroll, BorderLayout.CENTER);
         return card;
@@ -225,31 +217,30 @@ public class InterfacciaCorpo extends JFrame {
     private void addRow(JPanel grid, String label, JTextField field) {
         JLabel lbl = new JLabel(label);
         lbl.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        lbl.setForeground(FG_DIM);
+        lbl.setForeground(FG);
         grid.add(lbl);
         grid.add(field);
     }
 
-    // ── Factories ─────────────────────────────────────────────
     private JTextField makeField(String placeholder) {
         JTextField f = new JTextField(16);
         f.setBackground(FIELD_BG);
-        f.setForeground(FG);
-        f.setCaretColor(TEAL);
+        f.setForeground(FG_DIM);
+        f.setCaretColor(FIELD_FG);
         f.setFont(new Font("SansSerif", Font.PLAIN, 13));
         f.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(BORDER_C, 1),
                 new EmptyBorder(5, 8, 5, 8)
         ));
+        f.setOpaque(true);
         if (!placeholder.isEmpty()) {
             f.setText(placeholder);
-            f.setForeground(FG_DIM);
             f.addFocusListener(new java.awt.event.FocusAdapter() {
                 @Override
                 public void focusGained(java.awt.event.FocusEvent e) {
                     if (f.getText().equals(placeholder)) {
                         f.setText("");
-                        f.setForeground(FG);
+                        f.setForeground(FIELD_FG);
                     }
                 }
 

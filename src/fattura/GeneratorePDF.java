@@ -88,11 +88,18 @@ public class GeneratorePDF {
             tabellaCorpo.addCell(new PdfPCell(new Phrase("Importo", fontTestoBold)));
 
             for (Articolo art : fattura.getListaArticoli()) {
+                if (art.getNome() == null || art.getNome().trim().isEmpty() || art.getQuantita() == 0) {
+                    continue;
+                }
+
+                String prezzoUnitarioFormattato = String.format(java.util.Locale.US, "%.2f", art.getPrezzoPezzo());
+                String importoFormattato = String.format(java.util.Locale.US, "%.2f", art.getImporto());
+
                 tabellaCorpo.addCell(new PdfPCell(new Phrase(art.getNome(), fontTesto)));
                 tabellaCorpo.addCell(new PdfPCell(new Phrase(art.getDescrizione(), fontTesto)));
                 tabellaCorpo.addCell(new PdfPCell(new Phrase(Integer.toString(art.getQuantita()), fontTesto)));
-                tabellaCorpo.addCell(new PdfPCell(new Phrase(art.getPrezzoPezzo() + " €", fontTesto)));
-                tabellaCorpo.addCell(new PdfPCell(new Phrase(art.getImporto() + " €", fontTesto)));
+                tabellaCorpo.addCell(new PdfPCell(new Phrase(prezzoUnitarioFormattato + " €", fontTesto)));
+                tabellaCorpo.addCell(new PdfPCell(new Phrase(importoFormattato + " €", fontTesto)));
             }
 
             document.add(tabellaCorpo);

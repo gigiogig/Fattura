@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fattura;
 
 import java.awt.event.*;
@@ -19,7 +15,6 @@ public class GestoreEventiTest implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == gui.avanti) {
-                // 1. Istanziamo il modello e inseriamo i dati estratti dalla GUI della Testata
                 Fattura fatturaOggetto = new Fattura();
                 fatturaOggetto.setNomeFornitore(gui.nomeForn.getText().trim());
                 fatturaOggetto.setAziendaCedente(gui.aziendaCed.getText().trim());
@@ -36,10 +31,8 @@ public class GestoreEventiTest implements ActionListener {
                 fatturaOggetto.setTipoPagamento(gui.tipoPagamento.getText().trim());
                 fatturaOggetto.setBancaAppoggio(gui.banca.getText().trim());
 
-                // 2. Chiudiamo la finestra attuale
                 gui.dispose();
 
-                // 3. Apriamo il Corpo passando l'oggetto fattura (dovrai aggiornare il costruttore di InterfacciaCorpo per accettarlo)
                 InterfacciaCorpo f = new InterfacciaCorpo(fatturaOggetto);
                 f.setVisible(true);
             }
